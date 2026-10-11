@@ -17,10 +17,16 @@ npm run dev
 The service listens on <http://localhost:3000>, which can be overridden with the
 `PORT` environment variable.
 
+## Design
+
+- Tracks are held in memory, so nothing is persisted.
+- Storage sits behind the `TrackStorage` interface.
+- A persistent implementation, such as a database or another service, can
+  replace `MemoryTrackStorage` without changing the routes.
+
 ## Scripts
 
 - `npm run dev` start the service with reload
 - `npm test` run the tests
-- `npm run typecheck` type check the project
-- `npm run build` compile to `dist`
-- `npm start` run the compiled service
+- `npm run build` type check the project
+- `npm start` run the service
