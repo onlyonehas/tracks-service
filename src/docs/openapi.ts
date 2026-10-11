@@ -117,10 +117,19 @@ export const openapi = {
       },
       TrackAvailability: {
         type: 'object',
+        description: 'from must be earlier than to.',
         required: ['from', 'to', 'label'],
         properties: {
-          from: { type: 'string', format: 'date-time' },
-          to: { type: 'string', format: 'date-time' },
+          from: {
+            type: 'string',
+            pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$',
+            example: '2019-02-13T11:03:05Z',
+          },
+          to: {
+            type: 'string',
+            pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$',
+            example: '2019-03-15T11:00:00Z',
+          },
           label: { type: 'string', example: 'Available for 29 days' },
         },
       },
