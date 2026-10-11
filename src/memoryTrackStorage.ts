@@ -11,4 +11,8 @@ export class MemoryTrackStorage implements TrackStorage {
   findById(id: string): Track | undefined {
     return this.tracks.get(id);
   }
+
+  findAll(): Track[] {
+    return [...this.tracks.values()];
+  }
 }
