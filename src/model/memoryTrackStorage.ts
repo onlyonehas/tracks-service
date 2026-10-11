@@ -1,5 +1,5 @@
+import type { Track } from '../models/track.js';
 import type { TrackStorage } from './trackStorage.js';
-import type { Track } from './types.js';
 
 export class MemoryTrackStorage implements TrackStorage {
   private readonly tracks = new Map<string, Track>();
@@ -10,5 +10,9 @@ export class MemoryTrackStorage implements TrackStorage {
 
   findById(id: string): Track | undefined {
     return this.tracks.get(id);
+  }
+
+  findAll(): Track[] {
+    return [...this.tracks.values()];
   }
 }
