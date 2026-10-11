@@ -31,4 +31,19 @@ describe('POST /tracks adds a track', () => {
     expect(response.headers.location).toBe('/tracks/nznx3r');
     expect(response.body).toEqual(highwayToHell);
   });
+
+  it('rejects a track without a valid id', async () => {
+    const app = createApp(new MemoryTrackStorage());
+    const bodyWithoutId: Partial<Track> = {
+      type: 'track',
+      urn: highwayToHell.urn,
+      titles: highwayToHell.titles,
+      availability: highwayToHell.availability,
+    };
+
+    const response = await request(app).post('/tracks').send(bodyWithoutId);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: 'A track must have a valid id' });
+  });
 });
