@@ -71,10 +71,13 @@ Responses:
 - The service is in memory, so tracks are lost when it restarts.
 - Requests must send JSON with `Content-Type: application/json`.
 - `titles.secondary` and `titles.tertiary` are optional.
-- The required fields are `type`, `id`, `urn` and `titles.primary`. The
-  `availability` is optional, but when it is present its `from`, `to` and
-  `label` fields are required. `from` and `to` must be UTC timestamps in the
-  form `2019-02-13T11:03:05Z`, and `from` must be earlier than `to`. The other
-  fields are not format checked.
+- The required fields are `type`, `id`, `urn` and `titles.primary`.
+- `availability` is optional, so a track can be stored without it.
+- When `availability` is present, its `from`, `to` and `label` fields are all
+  required.
+- `from` and `to` must be UTC timestamps with second precision in the form
+  `2019-02-13T11:03:05Z`. Timezone offsets and fractional seconds are rejected.
+- `from` must be strictly earlier than `to`; equal timestamps are rejected.
+- Values other than `from` and `to` are not format checked.
 - Unknown fields are ignored.
 - There is no authentication, pagination or persistence.
