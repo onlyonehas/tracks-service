@@ -22,6 +22,11 @@ export function createTracksRouter(storage: TrackStorage): Router {
   router.get('/:id', (req, res) => {
     const track = storage.findById(req.params.id);
 
+    if (!track) {
+      res.status(404).json({ error: 'Track not found' });
+      return;
+    }
+
     res.json(track);
   });
 
