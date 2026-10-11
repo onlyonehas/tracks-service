@@ -9,17 +9,18 @@ import highwayToHellJson from './fixtures/highway-to-hell.json' with { type: 'js
 const highwayToHell = highwayToHellJson as unknown as Track;
 
 describe('POST /tracks adds a track', () => {
-  it('returns 201 and stores the provided track', async () => {
+  it('returns 201 and adds a new track', async () => {
     const app = createApp(new MemoryTrackStorage());
 
     const response = await request(app).post('/tracks').send(highwayToHell);
+    const stored = await request(app).get('/tracks/nznx3r');
 
     expect(response.status).toBe(201);
     expect(response.headers.location).toBe('/tracks/nznx3r');
-    expect(response.body).toEqual(highwayToHell);
+    expect(stored.body).toEqual(highwayToHell);
   });
 
-  it('inserts or replaces a track with the same id', async () => {
+  it('updates an existing track with the same id', async () => {
     const app = createApp(new MemoryTrackStorage());
     await request(app).post('/tracks').send(highwayToHell);
     const updated = {
@@ -27,11 +28,11 @@ describe('POST /tracks adds a track', () => {
       availability: { ...highwayToHell.availability, label: 'Available for 1 day' },
     };
 
-    const secondResponse = await request(app).post('/tracks').send(updated);
-    const found = await request(app).get('/tracks/nznx3r');
+    const response = await request(app).post('/tracks').send(updated);
+    const stored = await request(app).get('/tracks/nznx3r');
 
-    expect(secondResponse.status).toBe(201);
-    expect(found.body).toEqual(updated);
+    expect(response.status).toBe(201);
+    expect(stored.body).toEqual(updated);
   });
 
   it('rejects a track without a valid id', async () => {
