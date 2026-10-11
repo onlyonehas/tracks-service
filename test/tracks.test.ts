@@ -129,3 +129,26 @@ describe('GET /tracks lists tracks', () => {
     expect(response.body).toEqual({ tracks: [highwayToHell, another] });
   });
 });
+
+describe('the API handles bad requests', () => {
+  it('returns a meaningful error for malformed JSON', async () => {
+    const app = createApp(new MemoryTrackStorage());
+
+    const response = await request(app)
+      .post('/tracks')
+      .set('Content-Type', 'application/json')
+      .send('{"type":');
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: 'Invalid JSON body' });
+  });
+
+  it('returns a meaningful error for an unknown route', async () => {
+    const app = createApp(new MemoryTrackStorage());
+
+    const response = await request(app).get('/not-a-route');
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: 'Not found' });
+  });
+});
