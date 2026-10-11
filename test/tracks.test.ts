@@ -58,4 +58,13 @@ describe('GET /tracks/:id returns a track by id', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual(highwayToHell);
   });
+
+  it('returns a meaningful response when no track matches the id', async () => {
+    const app = createApp(new MemoryTrackStorage());
+
+    const response = await request(app).get('/tracks/does-not-exist');
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: 'Track not found' });
+  });
 });
