@@ -5,7 +5,7 @@ memory only, so nothing is persisted.
 
 ## Requirements
 
-- Node.js 24 (see `.node-version`)
+- Node.js 24 (see `.node-version` or `.nvmrc`)
 
 ## Getting started
 
@@ -43,4 +43,5 @@ See [docs/API.md](docs/API.md) for request and response details.
 - `npm run build` type check the project
 - `npm run lint` check formatting and lint rules with Biome
 - `npm run lint:fix` fix formatting and lint issues
+- `npm run audit` check dependencies for critical vulnerabilities
 - `npm start` run the service
