@@ -1,4 +1,4 @@
-import type { Track } from '../models/track.js';
+import type { Track } from '../types/track.js';
 import type { TrackStorage } from './trackStorage.js';
 
 export class MemoryTrackStorage implements TrackStorage {

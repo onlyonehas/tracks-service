@@ -1,4 +1,4 @@
-import type { Track } from '../models/track.js';
+import type { Track } from '../types/track.js';
 
 export interface TrackStorage {
   add(track: Track): void;
