@@ -1,5 +1,5 @@
 import { createApp } from './app.js';
-import { MemoryTrackStorage } from './memoryTrackStorage.js';
+import { MemoryTrackStorage } from './storage/memoryTrackStorage.js';
 
 const port = Number(process.env.PORT ?? 3000);
 

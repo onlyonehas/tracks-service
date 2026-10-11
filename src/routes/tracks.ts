@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import type { TrackStorage } from './trackStorage.js';
-import { validateTrack } from './trackValidation.js';
+import type { TrackStorage } from '../storage/trackStorage.js';
+import { validateTrack } from '../validation/trackValidation.js';
 
 export function createTracksRouter(storage: TrackStorage): Router {
   const router = Router();
