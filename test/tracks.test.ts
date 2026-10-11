@@ -65,6 +65,21 @@ describe('POST /tracks adds a track', () => {
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: 'A track must have a valid urn' });
   });
+
+  it('inserts or replaces a track with the same id', async () => {
+    const app = createApp(new MemoryTrackStorage());
+    await request(app).post('/tracks').send(highwayToHell);
+    const updated = {
+      ...highwayToHell,
+      availability: { ...highwayToHell.availability, label: 'Available for 1 day' },
+    };
+
+    const secondResponse = await request(app).post('/tracks').send(updated);
+    const found = await request(app).get('/tracks/nznx3r');
+
+    expect(secondResponse.status).toBe(201);
+    expect(found.body).toEqual(updated);
+  });
 });
 
 describe('GET /tracks/:id returns a track by id', () => {
@@ -85,5 +100,32 @@ describe('GET /tracks/:id returns a track by id', () => {
 
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ error: 'Track not found' });
+  });
+});
+
+describe('GET /tracks lists tracks', () => {
+  it('returns an empty list when no tracks have been added', async () => {
+    const app = createApp(new MemoryTrackStorage());
+
+    const response = await request(app).get('/tracks');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ tracks: [] });
+  });
+
+  it('returns every track that has been added', async () => {
+    const app = createApp(new MemoryTrackStorage());
+    await request(app).post('/tracks').send(highwayToHell);
+    const another = {
+      ...highwayToHell,
+      id: 'abc123',
+      urn: 'urn:bbc:sounds:track:abc123',
+    };
+    await request(app).post('/tracks').send(another);
+
+    const response = await request(app).get('/tracks');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ tracks: [highwayToHell, another] });
   });
 });
