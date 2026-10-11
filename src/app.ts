@@ -3,7 +3,9 @@ import express, {
   type Express,
   type RequestHandler,
 } from 'express';
+import swaggerUi from 'swagger-ui-express';
 
+import { openapi } from './docs/openapi.js';
 import type { TrackStorage } from './model/trackStorage.js';
 import { createTracksRouter } from './routes/tracks.js';
 
@@ -20,6 +22,11 @@ export function createApp(storage: TrackStorage): Express {
 
   app.use(express.json());
   app.use('/tracks', createTracksRouter(storage));
+
+  app.get('/openapi.json', (_req, res) => {
+    res.json(openapi);
+  });
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapi));
 
   const notFound: RequestHandler = (_req, res) => {
     res.status(404).json({ error: 'Not found' });
