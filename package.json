@@ -1,0 +1,27 @@
+{
+  "name": "tracks-service",
+  "version": "1.0.0",
+  "description": "Simplified Track Service for a streaming platform",
+  "main": "dist/src/server.js",
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "test": "jest",
+    "build": "tsc",
+    "start": "node dist/src/server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.6.5",
+    "@types/supertest": "^7.2.1",
+    "jest": "^30.5.2",
+    "supertest": "^7.3.1",
+    "ts-jest": "^29.4.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}
