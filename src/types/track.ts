@@ -15,5 +15,5 @@ export interface Track {
   id: string;
   urn: string;
   titles: TrackTitles;
-  availability: TrackAvailability;
+  availability?: TrackAvailability;
 }
