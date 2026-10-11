@@ -1,22 +1,22 @@
 import { Router } from 'express';
 
 import type { TrackStorage } from './trackStorage.js';
-import type { Track } from './types.js';
+import { validateTrack } from './trackValidation.js';
 
 export function createTracksRouter(storage: TrackStorage): Router {
   const router = Router();
 
   router.post('/', (req, res) => {
-    const track = req.body as Partial<Track>;
+    const result = validateTrack(req.body);
 
-    if (typeof track?.id !== 'string' || track.id.trim() === '') {
-      res.status(400).json({ error: 'A track must have a valid id' });
+    if (!result.ok) {
+      res.status(400).json({ error: result.error });
       return;
     }
 
-    storage.add(track as Track);
+    storage.add(result.track);
 
-    res.location(`/tracks/${track.id}`).status(201).json(track);
+    res.location(`/tracks/${result.track.id}`).status(201).json(result.track);
   });
 
   router.get('/:id', (req, res) => {
