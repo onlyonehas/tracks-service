@@ -27,7 +27,7 @@ Project conventions for contributors and coding agents.
 - `src/server.ts` starts it
 - `src/routes/` HTTP routes
 - `src/model/` the data layer (`TrackStorage` and `MemoryTrackStorage`)
-- `src/models/` domain types
+- `src/types/` domain types
 - `src/validation/` request validation
 - `src/docs/` the OpenAPI document
 - `test/` tests, with shared payloads in `test/fixtures`
