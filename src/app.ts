@@ -2,7 +2,7 @@ import express, { type Express } from 'express';
 
 import { errorHandler, notFoundHandler } from './middleware/errors.js';
 import { createTracksRouter } from './routes/tracks.js';
-import type { TrackStorage } from './storage/trackStorage.js';
+import type { TrackStorage } from './model/trackStorage.js';
 
 export function createApp(storage: TrackStorage): Express {
   const app = express();

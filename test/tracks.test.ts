@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createApp } from '../src/app.js';
 import type { Track } from '../src/models/track.js';
-import { MemoryTrackStorage } from '../src/storage/memoryTrackStorage.js';
+import { MemoryTrackStorage } from '../src/model/memoryTrackStorage.js';
 import highwayToHellJson from './fixtures/highway-to-hell.json' with { type: 'json' };
 
 const highwayToHell = highwayToHellJson as unknown as Track;
