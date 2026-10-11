@@ -44,3 +44,25 @@ See [docs/API.md](docs/API.md) for request and response details.
 - `npm run lint` check formatting and lint rules with Biome
 - `npm run lint:fix` fix formatting and lint issues
 - `npm start` run the service
+
+## Future work / production considerations
+
+This is a small in-memory service, so plenty would need doing before running it
+for real. Briefly:
+
+- **Config** – move settings like the port into a validated `.env` file rather
+  than reading `process.env` directly, with sensible defaults per environment.
+- **CI/CD** – add a pipeline (GitHub Actions) that runs lint, build and tests on
+  every push, then deploys automatically once merged.
+- **Deployment** – the app is stateless, so it would suit something serverless
+  like AWS Lambda behind API Gateway. Local testing could use a tool such as
+  SAM or LocalStack to run that setup on a laptop.
+- **Scaling** – in-memory storage only works for a single instance. Any real
+  deployment needs a shared backing store (e.g. DynamoDB or Postgres) behind the
+  existing `TrackStorage` interface so multiple instances see the same data.
+- **Caching** – popular reads (e.g. `GET /tracks/:id`) could be cached at the
+  edge or in front of the database to cut latency and load.
+- **Observability** – add structured logging, error tracking (e.g. Sentry) and
+  health/metrics endpoints so problems are visible in production.
+- **Security** – require API keys or tokens for access, put the service behind
+  TLS, and add rate limiting to protect against abuse.
