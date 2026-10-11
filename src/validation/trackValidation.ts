@@ -12,6 +12,16 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim() !== '';
 }
 
+const utcTimestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
+
+function isUtcTimestamp(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    utcTimestampPattern.test(value) &&
+    !Number.isNaN(Date.parse(value))
+  );
+}
+
 function buildTitles(source: Record<string, unknown>): TrackTitles {
   const titles: TrackTitles = { primary: source.primary as string };
 
@@ -54,14 +64,14 @@ export function validateTrack(input: unknown): ValidationResult {
       return { ok: false, error: 'A track must have a valid availability' };
     }
 
-    if (!isNonEmptyString(input.availability.from)) {
+    if (!isUtcTimestamp(input.availability.from)) {
       return {
         ok: false,
         error: 'A track must have a valid availability.from',
       };
     }
 
-    if (!isNonEmptyString(input.availability.to)) {
+    if (!isUtcTimestamp(input.availability.to)) {
       return { ok: false, error: 'A track must have a valid availability.to' };
     }
 
@@ -69,6 +79,15 @@ export function validateTrack(input: unknown): ValidationResult {
       return {
         ok: false,
         error: 'A track must have a valid availability.label',
+      };
+    }
+
+    if (
+      Date.parse(input.availability.from) >= Date.parse(input.availability.to)
+    ) {
+      return {
+        ok: false,
+        error: 'A track must have availability.from before availability.to',
       };
     }
 

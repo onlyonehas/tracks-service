@@ -8,6 +8,9 @@ import highwayToHellJson from './fixtures/highway-to-hell.json' with {
 
 const highwayToHell = highwayToHellJson as unknown as Track;
 
+const from = '2019-02-13T11:03:05Z';
+const to = '2019-03-15T11:00:00Z';
+
 const invalidCases: Array<[string, Record<string, unknown>, string]> = [
   [
     'without a valid type',
@@ -36,18 +39,49 @@ const invalidCases: Array<[string, Record<string, unknown>, string]> = [
   ],
   [
     'without an availability.from',
-    { ...highwayToHell, availability: { to: 'to', label: 'label' } },
+    { ...highwayToHell, availability: { to, label: 'Available for 29 days' } },
+    'A track must have a valid availability.from',
+  ],
+  [
+    'with an availability.from that is not a UTC timestamp',
+    {
+      ...highwayToHell,
+      availability: { from: '2019-02-13', to, label: 'Available for 29 days' },
+    },
     'A track must have a valid availability.from',
   ],
   [
     'without an availability.to',
-    { ...highwayToHell, availability: { from: 'from', label: 'label' } },
+    {
+      ...highwayToHell,
+      availability: { from, label: 'Available for 29 days' },
+    },
+    'A track must have a valid availability.to',
+  ],
+  [
+    'with an availability.to that is not a UTC timestamp',
+    {
+      ...highwayToHell,
+      availability: {
+        from,
+        to: '2019-03-15T11:00:00.000Z',
+        label: 'Available for 29 days',
+      },
+    },
     'A track must have a valid availability.to',
   ],
   [
     'without an availability.label',
-    { ...highwayToHell, availability: { from: 'from', to: 'to' } },
+    { ...highwayToHell, availability: { from, to } },
     'A track must have a valid availability.label',
+  ],
+  [
+    'with an availability.from that is not before to',
+    {
+      ...highwayToHell,
+      availability: { from: to, to: from, label: 'Available for 29 days' },
+    },
+    'A track must have availability.from before availability.to',
   ],
 ];
 

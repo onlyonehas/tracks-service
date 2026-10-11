@@ -73,6 +73,8 @@ Responses:
 - `titles.secondary` and `titles.tertiary` are optional.
 - The required fields are `type`, `id`, `urn` and `titles.primary`. The
   `availability` is optional, but when it is present its `from`, `to` and
-  `label` fields are required. Field formats are not validated.
+  `label` fields are required. `from` and `to` must be UTC timestamps in the
+  form `2019-02-13T11:03:05Z`, and `from` must be earlier than `to`. The other
+  fields are not format checked.
 - Unknown fields are ignored.
 - There is no authentication, pagination or persistence.
