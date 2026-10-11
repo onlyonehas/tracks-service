@@ -47,3 +47,15 @@ describe('POST /tracks adds a track', () => {
     expect(response.body).toEqual({ error: 'A track must have a valid id' });
   });
 });
+
+describe('GET /tracks/:id returns a track by id', () => {
+  it('returns the track that was added', async () => {
+    const app = createApp(new MemoryTrackStorage());
+    await request(app).post('/tracks').send(highwayToHell);
+
+    const response = await request(app).get('/tracks/nznx3r');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(highwayToHell);
+  });
+});
