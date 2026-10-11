@@ -46,6 +46,25 @@ describe('POST /tracks adds a track', () => {
     expect(response.status).toBe(400);
     expect(response.body).toEqual({ error: 'A track must have a valid id' });
   });
+
+  it('rejects a track missing another required field', async () => {
+    const app = createApp(new MemoryTrackStorage());
+    const bodyWithoutUrn = {
+      type: 'track',
+      id: 'nznx3r',
+      titles: { primary: 'AC/DC' },
+      availability: {
+        from: '2019-02-13T11:03:05Z',
+        to: '2019-03-15T11:00:00Z',
+        label: 'Available for 29 days',
+      },
+    };
+
+    const response = await request(app).post('/tracks').send(bodyWithoutUrn);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: 'A track must have a valid urn' });
+  });
 });
 
 describe('GET /tracks/:id returns a track by id', () => {
