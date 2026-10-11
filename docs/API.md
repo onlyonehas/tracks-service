@@ -3,6 +3,9 @@
 The API is JSON over HTTP. The examples below use <http://localhost:3000>.
 Request bodies must be sent with `Content-Type: application/json`.
 
+An interactive version of this document is served at `/docs`, and the raw
+OpenAPI document is served at `/openapi.json`.
+
 A track looks like this:
 
 ```json

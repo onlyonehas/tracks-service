@@ -27,7 +27,9 @@ The API is JSON over HTTP.
 | GET    | `/tracks/:id` | Fetch a track by id                                    |
 | GET    | `/tracks`     | List tracks                                            |
 
-See [docs/API.md](docs/API.md) for request and response details.
+See [docs/API.md](docs/API.md) for request and response details. An interactive
+Swagger UI is served at <http://localhost:3000/docs>, backed by the OpenAPI
+document at <http://localhost:3000/openapi.json>.
 
 ## Design
 
