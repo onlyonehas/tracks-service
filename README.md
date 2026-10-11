@@ -41,4 +41,6 @@ See [docs/API.md](docs/API.md) for request and response details.
 - `npm run dev` start the service with reload
 - `npm test` run the tests
 - `npm run build` type check the project
+- `npm run lint` check formatting and lint rules with Biome
+- `npm run lint:fix` fix formatting and lint issues
 - `npm start` run the service

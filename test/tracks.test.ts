@@ -2,9 +2,11 @@ import request from 'supertest';
 import { describe, expect, it } from 'vitest';
 
 import { createApp } from '../src/app.js';
-import type { Track } from '../src/models/track.js';
 import { MemoryTrackStorage } from '../src/model/memoryTrackStorage.js';
-import highwayToHellJson from './fixtures/highway-to-hell.json' with { type: 'json' };
+import type { Track } from '../src/models/track.js';
+import highwayToHellJson from './fixtures/highway-to-hell.json' with {
+  type: 'json',
+};
 
 const highwayToHell = highwayToHellJson as unknown as Track;
 
@@ -25,7 +27,10 @@ describe('POST /tracks adds a track', () => {
     await request(app).post('/tracks').send(highwayToHell);
     const updated = {
       ...highwayToHell,
-      availability: { ...highwayToHell.availability, label: 'Available for 1 day' },
+      availability: {
+        ...highwayToHell.availability,
+        label: 'Available for 1 day',
+      },
     };
 
     const response = await request(app).post('/tracks').send(updated);
