@@ -71,7 +71,8 @@ Responses:
 - The service is in memory, so tracks are lost when it restarts.
 - Requests must send JSON with `Content-Type: application/json`.
 - `titles.secondary` and `titles.tertiary` are optional.
-- The required fields are checked: `type`, `id`, `urn`, `titles.primary` and
-  the three `availability` fields. Field formats are not validated.
+- The required fields are `type`, `id`, `urn` and `titles.primary`. The
+  `availability` is optional, but when it is present its `from`, `to` and
+  `label` fields are required. Field formats are not validated.
 - Unknown fields are ignored.
 - There is no authentication, pagination or persistence.

@@ -47,36 +47,48 @@ export function validateTrack(input: unknown): ValidationResult {
     return { ok: false, error: 'A track must have a valid titles.primary' };
   }
 
-  if (!isRecord(input.availability)) {
-    return { ok: false, error: 'A track must have a valid availability' };
+  let availability: TrackAvailability | undefined;
+
+  if (input.availability !== undefined) {
+    if (!isRecord(input.availability)) {
+      return { ok: false, error: 'A track must have a valid availability' };
+    }
+
+    if (!isNonEmptyString(input.availability.from)) {
+      return {
+        ok: false,
+        error: 'A track must have a valid availability.from',
+      };
+    }
+
+    if (!isNonEmptyString(input.availability.to)) {
+      return { ok: false, error: 'A track must have a valid availability.to' };
+    }
+
+    if (!isNonEmptyString(input.availability.label)) {
+      return {
+        ok: false,
+        error: 'A track must have a valid availability.label',
+      };
+    }
+
+    availability = {
+      from: input.availability.from,
+      to: input.availability.to,
+      label: input.availability.label,
+    };
   }
 
-  if (!isNonEmptyString(input.availability.from)) {
-    return { ok: false, error: 'A track must have a valid availability.from' };
-  }
-
-  if (!isNonEmptyString(input.availability.to)) {
-    return { ok: false, error: 'A track must have a valid availability.to' };
-  }
-
-  if (!isNonEmptyString(input.availability.label)) {
-    return { ok: false, error: 'A track must have a valid availability.label' };
-  }
-
-  const availability: TrackAvailability = {
-    from: input.availability.from,
-    to: input.availability.to,
-    label: input.availability.label,
+  const track: Track = {
+    type: 'track',
+    id: input.id,
+    urn: input.urn,
+    titles: buildTitles(input.titles),
   };
 
-  return {
-    ok: true,
-    track: {
-      type: 'track',
-      id: input.id,
-      urn: input.urn,
-      titles: buildTitles(input.titles),
-      availability,
-    },
-  };
+  if (availability) {
+    track.availability = availability;
+  }
+
+  return { ok: true, track };
 }
