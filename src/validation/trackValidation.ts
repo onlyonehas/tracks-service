@@ -1,4 +1,4 @@
-import type { Track, TrackAvailability, TrackTitles } from '../models/track.js';
+import type { Track, TrackAvailability, TrackTitles } from '../types/track.js';
 
 export type ValidationResult =
   | { ok: true; track: Track }

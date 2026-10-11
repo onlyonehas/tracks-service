@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createApp } from '../src/app.js';
 import { MemoryTrackStorage } from '../src/model/memoryTrackStorage.js';
-import type { Track } from '../src/models/track.js';
+import type { Track } from '../src/types/track.js';
 import highwayToHellJson from './fixtures/highway-to-hell.json' with {
   type: 'json',
 };
