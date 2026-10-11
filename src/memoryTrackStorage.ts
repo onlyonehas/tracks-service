@@ -7,4 +7,8 @@ export class MemoryTrackStorage implements TrackStorage {
   add(track: Track): void {
     this.tracks.set(track.id, track);
   }
+
+  findById(id: string): Track | undefined {
+    return this.tracks.get(id);
+  }
 }
