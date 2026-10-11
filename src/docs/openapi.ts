@@ -97,7 +97,7 @@ export const openapi = {
     schemas: {
       Track: {
         type: 'object',
-        required: ['type', 'id', 'urn', 'titles', 'availability'],
+        required: ['type', 'id', 'urn', 'titles'],
         properties: {
           type: { type: 'string', enum: ['track'] },
           id: { type: 'string', example: 'nznx3r' },
